@@ -1,0 +1,37 @@
+# Sample makefile
+
+CC = /usr/bin/gcc
+CFLAGS = -std=c99 -Wall -g
+LDFLAGS = -lm
+
+# name of the executable to be created
+PROJECT = SampleProject
+
+# list of all .c files
+SRCS = sample.c circleUtils.c
+
+#list of all .h files
+HDRS = circleUtils.h
+
+# list of .o files
+OBJS = sample.o circleUtils.o
+
+# the first rule is the default rule
+# build the executable from the .o files
+$(PROJECT) : $(OBJS)
+	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJS) -o $(PROJECT)
+
+# a separate rule to compile each .c file
+sample.o: sample.c circleUtils.h
+	$(CC) $(CFLAGS) -c sample.c
+
+circleUtils.o : circleUtils.c circleUtils.h
+	$(CC) $(CFLAGS) -c circleUtils.c
+
+# some handy commands that you can "make"
+clean:
+	rm -fv core* $(PROJECT) $(OBJS)
+
+cleaner: clean
+	rm -fv #* *~
+
