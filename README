@@ -1,0 +1,23 @@
+The Objective:
+The objective of this assignment is to become familiar using arrays of structures, functions with array parameters, formatted ouput and text file I/O in a C application. Program design, separate compilation and makefiles are also important aspects of this project. Students will also gain experience with command line arguments.
+
+The Task:
+One of the most fundamantal concepts in algebra is the polynomial. A polynomial in one variable, say x, is the sum of terms made up of a coefficient and an exponent
+e.g. 4x^5 - 3x^3 + 2x^2 - 6x + 1.
+
+In this project, you will be implementing a polynomial (and its terms) using structs and performing operations on those polynomials based on commands read from a command file.
+
+Since some commands operate on multiple polynomials, an array of polynomials is necessary in your program. Each command will indicate to which polynomial(s) it applies by supplying the index (or indicies) of the polynomial(s) in the array.
+
+How does your program work?
+
+    Your program is executed with a single command line argument which is the name of the command file to process.
+    Your program reads the command file and executes each command. All commands must be echoed to the screen. See sample output below.
+
+The command file:
+Each command in the command file will be on a separate line. Command arguments are separated by whitespace. All commands will be in upper-case as shown below. All commands and command arguments will be valid. Blank lines may appear anywhere in the file and should be ignored. Lines that begin with '#' (the pound character) are comments and should also be ignored.
+
+    ADDTERM <index> <coefficient> <exponent> -- add a term with the specified coefficeint and exponent to the specified polynomial. If a term with the specified exponent already exists in the polynomial, then combine/add the new term with/to the existing term. We guarantee that all exponents are non-negative. An exponent of zero (0) indicates a constant term.
+    MULTIPLY <index> <scalar value> -- multiply each coefficient of the specified polynomial by the scalar value.
+    ADD <sum index> <op1 index> <op2 index> -- add the polynomials specified by the operand indicies and store their sum. e.g. sum = op1 + op2. See Requirements section for more about the ADD command.
+    SUBTRACT <diff index> <op1 index> <op2 index> -- subtract the polynomial specified by <op2 index> from the polynomial specified by <op1 index> and store the result in the polynomial specified by <diff index> e.g. diff = op1 - op2. See Requirements section for more about the SUBTRACT command.
