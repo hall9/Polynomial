@@ -17,9 +17,18 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
+#include "polynomial.h"
 
-int main (char filename[] ) {
+int main (int numb, char *argv[] ) {
+     
+    FILE *cmdFile = fopen(argv[1], "r");
+    if (cmdFile == NULL) {
+        printf("Error opening file: %s\nThis file may not exst or is empty.\nExiting program now...\n", argv[1]);
+        exit(-1);
+    }
     
+    printf("%s/n", argv[1]);
     
-    
+    return 0;
 }
