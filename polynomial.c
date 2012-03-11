@@ -34,7 +34,7 @@ typedef struct polynomial {
 polynomial polynomials[MAXpolynomials];
 
 
-static void poly_addterm (int index, int coeff, int expo) {
+void poly_addterm (int index, int coeff, int expo) {
     
     int size = polynomials[index].size;
     int newTerm = 1;
@@ -52,17 +52,28 @@ static void poly_addterm (int index, int coeff, int expo) {
         polynomials[index].size += 1;
     }
     
-    printf("/////  polyIndex: %d, size: %d, coeff: %d, Expo: %d\n", index, size, polynomials[index].terms[size].coeff, polynomials[index].terms[size].expo );
+    printf("/////  polyIndex: %d, size: %d, coeff: %d, Expo: %d\n\n", index, size, polynomials[index].terms[size].coeff, polynomials[index].terms[size].expo );
 }
 
-static void poly_multiply(int index, int scalar) {
+void poly_multiply(int index, int scalar) {
+    
+     int size = polynomials[index].size;
+    
+    for(int i = 0; i < size; i++) {
+        polynomials[index].terms[i].coeff = polynomials[index].terms[i].coeff * scalar;
+    }
+    
+    printf("/////  polyIndex: %d, size: %d, coeff: %d, Expo: %d\n", index, size, polynomials[index].terms[0].coeff, polynomials[index].terms[0].expo );
+    printf("/////  polyIndex: %d, size: %d, coeff: %d, Expo: %d\n", index, size, polynomials[index].terms[1].coeff, polynomials[index].terms[1].expo );
+    printf("/////  polyIndex: %d, size: %d, coeff: %d, Expo: %d\n\n", index, size, polynomials[index].terms[2].coeff, polynomials[index].terms[2].expo );
+}
+
+void poly_adding(int index, int index1, int index2) {
+    
+    
     
 }
 
-static void poly_adding(int index, int index1, int index2) {
-    
-}
-
-static void poly_subtract(int index, int index1, int index2) {
+void poly_subtract(int index, int index1, int index2) {
     
 }

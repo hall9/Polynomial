@@ -55,6 +55,7 @@ int main (int numb, char *argv[] ) {
             fscanf(cmdFile, "%d", &exponent );
             
             printf("%s, Poly: %d, Coeff: %d, EXP: %d\n", command, index, coeffient, exponent );
+            
             poly_addterm(index, coeffient, exponent);
         }
         else if ( strcmp(command, multiply) == 0 ) {
@@ -64,6 +65,7 @@ int main (int numb, char *argv[] ) {
             
             printf("%s, Poly: %d, Multiplier: %d\n", command, index, scalar );
             
+            poly_multiply(index, scalar);
         }
         else if ( strcmp(command, adding) == 0 ) {
             
@@ -73,6 +75,8 @@ int main (int numb, char *argv[] ) {
             
             printf("%s, Sum: %d, Op1: %d, Op2: %d\n", command, index, index1, index2 );
             
+            poly_adding(index, index1, index2);
+            
         }
         else if ( strcmp(command, subtract) == 0 ) {
             
@@ -81,6 +85,8 @@ int main (int numb, char *argv[] ) {
             fscanf(cmdFile, "%d", &index2 );
             
             printf("%s, Diff: %d, Op1: %d, Op2: %d\n", command, index, index1, index2 );
+            
+            poly_subtract(index, index1, index2);
         }
     }
     
