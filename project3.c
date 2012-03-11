@@ -28,7 +28,6 @@ static char multiply[] = "MULTIPLY";
 static char adding[] = "ADD";
 static char subtract[] = "SUBTRACT";
 
-
 int main (int numb, char *argv[] ) {
      
     FILE *cmdFile = fopen(argv[1], "r");
@@ -56,6 +55,7 @@ int main (int numb, char *argv[] ) {
             fscanf(cmdFile, "%d", &exponent );
             
             printf("%s, Poly: %d, Coeff: %d, EXP: %d\n", command, index, coeffient, exponent );
+            poly_addterm(index, coeffient, exponent);
         }
         else if ( strcmp(command, multiply) == 0 ) {
             

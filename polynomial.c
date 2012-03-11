@@ -36,6 +36,23 @@ polynomial polynomials[MAXpolynomials];
 
 static void poly_addterm (int index, int coeff, int expo) {
     
+    int size = polynomials[index].size;
+    int newTerm = 1;
+    
+    for (int i = 0; i < size; i++) {
+        if (polynomials[index].terms[i].expo == expo) {
+            polynomials[index].terms[i].coeff += coeff;
+            newTerm = 0;
+        }
+    }
+    
+    if(newTerm) {
+        polynomials[index].terms[size].expo = expo;
+        polynomials[index].terms[size].coeff = coeff;
+        polynomials[index].size += 1;
+    }
+    
+    printf("/////  polyIndex: %d, size: %d, coeff: %d, Expo: %d\n", index, size, polynomials[index].terms[size].coeff, polynomials[index].terms[size].expo );
 }
 
 static void poly_multiply(int index, int scalar) {
