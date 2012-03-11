@@ -18,7 +18,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <string.h>
 #include "polynomial.h"
+
+#define MAXcommandlength 10
+
+static char addterm[] = "ADDTERM";
+static char multiply[] = "MULTIPLY";
+static char adding[] = "ADD";
+static char subtract[] = "SUBTRACT";
+
 
 int main (int numb, char *argv[] ) {
      
@@ -28,7 +37,52 @@ int main (int numb, char *argv[] ) {
         exit(-1);
     }
     
-    printf("%s/n", argv[1]);
+    printf("Reading this file: %s\n", argv[1]);
+    
+    char command[MAXcommandlength];
+    int index;
+    int index1;
+    int index2;
+    int coeffient;
+    int exponent;
+    int scalar;
+    
+    while ( fscanf(cmdFile, "%s", command) != EOF ) {
+        
+        if ( strcmp(command, addterm) == 0) {
+            
+            fscanf(cmdFile, "%d", &index );
+            fscanf(cmdFile, "%d", &coeffient );
+            fscanf(cmdFile, "%d", &exponent );
+            
+            printf("%s, Poly: %d, Coeff: %d, EXP: %d\n", command, index, coeffient, exponent );
+        }
+        else if ( strcmp(command, multiply) == 0 ) {
+            
+            fscanf(cmdFile, "%d", &index );
+            fscanf(cmdFile, "%d", &scalar );
+            
+            printf("%s, Poly: %d, Multiplier: %d\n", command, index, scalar );
+            
+        }
+        else if ( strcmp(command, adding) == 0 ) {
+            
+            fscanf(cmdFile, "%d", &index );
+            fscanf(cmdFile, "%d", &index1 );
+            fscanf(cmdFile, "%d", &index2 );
+            
+            printf("%s, Sum: %d, Op1: %d, Op2: %d\n", command, index, index1, index2 );
+            
+        }
+        else if ( strcmp(command, subtract) == 0 ) {
+            
+            fscanf(cmdFile, "%d", &index );
+            fscanf(cmdFile, "%d", &index1 );
+            fscanf(cmdFile, "%d", &index2 );
+            
+            printf("%s, Diff: %d, Op1: %d, Op2: %d\n", command, index, index1, index2 );
+        }
+    }
     
     return 0;
 }

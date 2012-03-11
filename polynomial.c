@@ -12,12 +12,40 @@
  **
  ***********************************************/
 
-#include <stdio.h>
-#include <stdlib.h>
 #include "polynomial.h"
 
+#define MAXterms 20
+#define MAXpolynomials 8
 
-int addtwo() {
+typedef struct term {
+
+    int coeff;
+    int expo;
     
-    return 1;
+} term;
+
+typedef struct polynomial {
+    
+    int size;
+    term terms[MAXterms];
+    
+} polynomial;
+
+polynomial polynomials[MAXpolynomials];
+
+
+static void poly_addterm (int index, int coeff, int expo) {
+    
+}
+
+static void poly_multiply(int index, int scalar) {
+    
+}
+
+static void poly_adding(int index, int index1, int index2) {
+    
+}
+
+static void poly_subtract(int index, int index1, int index2) {
+    
 }
