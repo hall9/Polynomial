@@ -12,68 +12,141 @@
  **
  ***********************************************/
 
+#include <string.h>
+#include <stdbool.h>
 #include "polynomial.h"
 
-#define MAXterms 20
-#define MAXpolynomials 8
+static POLYNOMIAL sortTerms( POLYNOMIAL polynomial );
 
-typedef struct term {
-
-    int coeff;
-    int expo;
+POLYNOMIAL poly_addterm ( POLYNOMIAL polynomial, int coeff, int expo ) {
+    bool newTerm = true;
+    int size = polynomial.size;
     
-} term;
+    if(polynomial.size == 0) {
+        polynomial.terms[0].expo = expo;
+        polynomial.terms[0].coeff = coeff;
+        polynomial.size = 1;
+    }
+    else {
+        for (int i = 0; i < size; i++) {
+            if (polynomial.terms[i].expo == expo) {
+                polynomial.terms[i].coeff = polynomial.terms[i].coeff + coeff;
+                newTerm = false;
+            }
+            else if (i == size - 1 && newTerm == true) {
+                polynomial.terms[size].expo = expo;
+                polynomial.terms[size].coeff = coeff;
+                polynomial.size = polynomial.size + 1;
+            }
+        }
+    }
 
-typedef struct polynomial {
+    polynomial = sortTerms ( polynomial );
     
-    int size;
-    term terms[MAXterms];
-    
-} polynomial;
+    return polynomial;
+}
 
-polynomial polynomials[MAXpolynomials];
-
-
-void poly_addterm (int index, int coeff, int expo) {
+POLYNOMIAL poly_multiply( POLYNOMIAL polynomial, int scalar ) {
     
-    int size = polynomials[index].size;
-    int newTerm = 1;
+    int size = polynomial.size;
     
-    for (int i = 0; i < size; i++) {
-        if (polynomials[index].terms[i].expo == expo) {
-            polynomials[index].terms[i].coeff += coeff;
-            newTerm = 0;
+    for(int i = 0; i < size; i++) {
+        polynomial.terms[i].coeff = polynomial.terms[i].coeff * scalar;
+    }
+    
+    polynomial = sortTerms ( polynomial );
+    
+    return polynomial;
+}
+
+POLYNOMIAL poly_adding( POLYNOMIAL polynomial, POLYNOMIAL polynomial1, POLYNOMIAL polynomial2 ) {
+    
+    
+    if ( polynomial1.size >= polynomial2.size) {
+        polynomial = polynomial1;
+        for (int i = 0; i <= polynomial2.size; i++) {
+            polynomial = poly_addterm(polynomial, polynomial2.terms[i].coeff, polynomial2.terms[i].expo);
+        }
+    }
+    else {
+        polynomial = polynomial2;
+        for (int i = 0; i <= polynomial1.size; i++) {
+            polynomial = poly_addterm(polynomial, polynomial1.terms[i].coeff, polynomial1.terms[i].expo);
         }
     }
     
-    if(newTerm) {
-        polynomials[index].terms[size].expo = expo;
-        polynomials[index].terms[size].coeff = coeff;
-        polynomials[index].size += 1;
+    return polynomial;
+}
+
+POLYNOMIAL poly_subtract( POLYNOMIAL polynomial, POLYNOMIAL polynomial1, POLYNOMIAL polynomial2 ) {
+    
+    polynomial = polynomial1;
+    
+    for (int i = 0; i < polynomial2.size; i++) {
+        polynomial = poly_addterm(polynomial, - polynomial2.terms[i].coeff, polynomial2.terms[i].expo);
     }
     
-    printf("/////  polyIndex: %d, size: %d, coeff: %d, Expo: %d\n\n", index, size, polynomials[index].terms[size].coeff, polynomials[index].terms[size].expo );
+    polynomial = sortTerms ( polynomial );
+    
+    return polynomial;
 }
 
-void poly_multiply(int index, int scalar) {
+static POLYNOMIAL sortTerms( POLYNOMIAL polynomial ) {
     
-     int size = polynomials[index].size;
+    int size = polynomial.size;
+    TERM temp;
     
-    for(int i = 0; i < size; i++) {
-        polynomials[index].terms[i].coeff = polynomials[index].terms[i].coeff * scalar;
+    for ( int b = 0; b < size - 1; b++) {
+        for ( int n = 0; n < size - 1 - b; n++ ) {
+            if ( polynomial.terms[n].expo < polynomial.terms[n + 1].expo ) {
+                temp = polynomial.terms[ n + 1 ];
+                polynomial.terms[ n + 1 ] = polynomial.terms[ n ];
+                polynomial.terms[ n ] = temp;
+            }
+        }
     }
     
-    printf("/////  polyIndex: %d, size: %d, coeff: %d, Expo: %d\n", index, size, polynomials[index].terms[0].coeff, polynomials[index].terms[0].expo );
-    printf("/////  polyIndex: %d, size: %d, coeff: %d, Expo: %d\n", index, size, polynomials[index].terms[1].coeff, polynomials[index].terms[1].expo );
-    printf("/////  polyIndex: %d, size: %d, coeff: %d, Expo: %d\n\n", index, size, polynomials[index].terms[2].coeff, polynomials[index].terms[2].expo );
+    return polynomial;
 }
 
-void poly_adding(int index, int index1, int index2) {
+void polyString( POLYNOMIAL polynomial, char s[]) {
     
-    
-    
+    int size = polynomial.size;
+    sprintf(s," ");
+    for (int i = 0; i < size; i++) {
+        if (polynomial.terms[i].coeff != 0) {
+            if (polynomial.terms[i].expo == 0 ) {
+                if (polynomial.terms[i].coeff > 0 && i != 0 ) {
+                    sprintf(&s[strlen(s)], " + ");
+                }
+                else if (i != 0) {
+                
+                }
+            
+                sprintf( &s[strlen(s)], "%d", polynomial.terms[i].coeff );
+            } 
+            else if (polynomial.terms[i].expo == 1) {
+                if (polynomial.terms[i].coeff > 0 && i != 0) {
+                    sprintf(&s[strlen(s)],  " + ");
+                }
+                else if (i != 0) {
+                
+                }
+            
+                sprintf( &s[strlen(s)], "%dx", polynomial.terms[i].coeff );
+            }
+            else if (polynomial.terms[i].expo > 1) {
+                if (polynomial.terms[i].coeff > 0 && i != 0) {
+                    sprintf(&s[strlen(s)], " + ");
+                }
+                else if (i != 0) {
+                
+                }
+            
+                sprintf( &s[strlen(s)], "%dx^%d", polynomial.terms[i].coeff, polynomial.terms[i].expo );
+            }
+        }
+    }
 }
-
-void poly_subtract(int index, int index1, int index2) {
-    
-}
+            
+        

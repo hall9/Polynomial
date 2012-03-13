@@ -15,11 +15,28 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void poly_addterm (int index, int coeff, int expo);
+#define MAXTERMS 20
 
-void poly_multiply(int index, int scalar);
+typedef struct term {
+    
+    int coeff;
+    int expo;
+    
+} TERM;
 
-void poly_adding(int index, int index1, int index2);
+typedef struct polynomial {
+    
+    int size;
+    TERM terms[MAXTERMS];
+    
+} POLYNOMIAL;
 
-void poly_subtract(int index, int index1, int index2);
+POLYNOMIAL poly_addterm ( POLYNOMIAL polynomial, int coeff, int expo );
 
+POLYNOMIAL poly_multiply( POLYNOMIAL polynomial, int scalar );
+
+POLYNOMIAL poly_adding( POLYNOMIAL polynomial, POLYNOMIAL polynomial1, POLYNOMIAL polynomial2 );
+
+POLYNOMIAL poly_subtract( POLYNOMIAL polynomial, POLYNOMIAL polynomial1, POLYNOMIAL polynomial2 );
+
+void polyString( POLYNOMIAL polynomial, char s[]);

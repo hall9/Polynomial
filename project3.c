@@ -17,11 +17,14 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <ctype.h>
 #include <string.h>
 #include "polynomial.h"
 
-#define MAXcommandlength 10
+#define MAXCOMMANDLENGTH 10
+#define MAXPOLYNOMIALS 8
+#define MAXSTRINGLENGTH 101
+
+POLYNOMIAL polynomials[MAXPOLYNOMIALS];
 
 static char addterm[] = "ADDTERM";
 static char multiply[] = "MULTIPLY";
@@ -36,15 +39,16 @@ int main (int numb, char *argv[] ) {
         exit(-1);
     }
     
-    printf("Reading this file: %s\n", argv[1]);
+    //printf("Reading this file: %s\n", argv[1]);
     
-    char command[MAXcommandlength];
+    char command[MAXCOMMANDLENGTH];
     int index;
     int index1;
     int index2;
     int coeffient;
     int exponent;
     int scalar;
+    char string[MAXSTRINGLENGTH];
     
     while ( fscanf(cmdFile, "%s", command) != EOF ) {
         
@@ -54,18 +58,24 @@ int main (int numb, char *argv[] ) {
             fscanf(cmdFile, "%d", &coeffient );
             fscanf(cmdFile, "%d", &exponent );
             
-            printf("%s, Poly: %d, Coeff: %d, EXP: %d\n", command, index, coeffient, exponent );
+            printf("CMD: %s, Poly: %d, Coeff: %d, EXP: %d\n", command, index, coeffient, exponent );
             
-            poly_addterm(index, coeffient, exponent);
+            polynomials[index] = poly_addterm(polynomials[index], coeffient, exponent);
+            
+            polyString(polynomials[index], string);
+            printf("Poly%d =%s\n\n", index, string);
         }
         else if ( strcmp(command, multiply) == 0 ) {
             
             fscanf(cmdFile, "%d", &index );
             fscanf(cmdFile, "%d", &scalar );
             
-            printf("%s, Poly: %d, Multiplier: %d\n", command, index, scalar );
+            printf("CMD: %s, Poly: %d, Multiplier: %d\n", command, index, scalar );
             
-            poly_multiply(index, scalar);
+            polynomials[index] = poly_multiply(polynomials[index], scalar);
+            
+            polyString(polynomials[index], string);
+            printf("Poly%d =%s\n\n", index, string);
         }
         else if ( strcmp(command, adding) == 0 ) {
             
@@ -73,10 +83,12 @@ int main (int numb, char *argv[] ) {
             fscanf(cmdFile, "%d", &index1 );
             fscanf(cmdFile, "%d", &index2 );
             
-            printf("%s, Sum: %d, Op1: %d, Op2: %d\n", command, index, index1, index2 );
+            printf("CMD: %s, Sum: %d, Op1: %d, Op2: %d\n", command, index, index1, index2 );
             
-            poly_adding(index, index1, index2);
+            polynomials[index] = poly_adding(polynomials[index], polynomials[index1], polynomials[index2]);
             
+            polyString(polynomials[index], string);
+            printf("Poly%d =%s\n\n", index, string);
         }
         else if ( strcmp(command, subtract) == 0 ) {
             
@@ -84,9 +96,12 @@ int main (int numb, char *argv[] ) {
             fscanf(cmdFile, "%d", &index1 );
             fscanf(cmdFile, "%d", &index2 );
             
-            printf("%s, Diff: %d, Op1: %d, Op2: %d\n", command, index, index1, index2 );
+            printf("CMD: %s, Diff: %d, Op1: %d, Op2: %d\n", command, index, index1, index2 );
             
-            poly_subtract(index, index1, index2);
+            polynomials[index] = poly_subtract(polynomials[index], polynomials[index1], polynomials[index2]);
+            
+            polyString(polynomials[index], string);
+            printf("Poly%d =%s\n\n", index, string);
         }
     }
     
