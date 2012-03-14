@@ -16,8 +16,17 @@
 #include <stdbool.h>
 #include "polynomial.h"
 
+// sortTerms prototype
 static POLYNOMIAL sortTerms( POLYNOMIAL polynomial );
 
+
+/**************************************************
+ ** poly_addterm --
+ **     This fucntion addes terms to the polynomail
+ ** with the specified coff and expo
+ **     Inputs: A Polynomial to insert the coeff and expo
+ **     Output: The polynomial is returned
+ **************************************************/
 POLYNOMIAL poly_addterm ( POLYNOMIAL polynomial, int coeff, int expo ) {
     bool newTerm = true;
     int size = polynomial.size;
@@ -46,6 +55,13 @@ POLYNOMIAL poly_addterm ( POLYNOMIAL polynomial, int coeff, int expo ) {
     return polynomial;
 }
 
+/**************************************************
+ ** poly_multiply --
+ **     This fucntion multiplys each term coeff in the polynomail
+ ** by a scalar
+ **     Inputs: A Polynomial to apply the scalar
+ **     Output: The polynomial is returned
+ **************************************************/
 POLYNOMIAL poly_multiply( POLYNOMIAL polynomial, int scalar ) {
     
     int size = polynomial.size;
@@ -59,6 +75,14 @@ POLYNOMIAL poly_multiply( POLYNOMIAL polynomial, int scalar ) {
     return polynomial;
 }
 
+/**************************************************
+ ** poly_adding --
+ **     This fucntion adds two different polynomials
+ ** and stores it in a new polynomial
+ **     Inputs: The new polynomial, followed by both polynomials
+ ** being added
+ **     Output: The polynomial is returned
+ **************************************************/
 POLYNOMIAL poly_adding( POLYNOMIAL polynomial, POLYNOMIAL polynomial1, POLYNOMIAL polynomial2 ) {
     
     
@@ -78,6 +102,14 @@ POLYNOMIAL poly_adding( POLYNOMIAL polynomial, POLYNOMIAL polynomial1, POLYNOMIA
     return polynomial;
 }
 
+/**************************************************
+ ** poly_subtract --
+ **     This fucntion subtract two different polynomials
+ ** and stores it in a new polynomial
+ **     Inputs: The new polynomial, followed the polynomial1
+ ** and the second polynomial2 is beding subtracted from polynomial1
+ **     Output: The polynomial is returned
+ **************************************************/
 POLYNOMIAL poly_subtract( POLYNOMIAL polynomial, POLYNOMIAL polynomial1, POLYNOMIAL polynomial2 ) {
     
     polynomial = polynomial1;
@@ -91,6 +123,13 @@ POLYNOMIAL poly_subtract( POLYNOMIAL polynomial, POLYNOMIAL polynomial1, POLYNOM
     return polynomial;
 }
 
+/**************************************************
+ ** sortTerms -- help method
+ **     This funtions sorts the polynomial based on
+ ** the expo value, from highest to lowest
+ **     Inputs: The polynomial to be sorted
+ **     Output: The sorted polynomial is returned
+ **************************************************/
 static POLYNOMIAL sortTerms( POLYNOMIAL polynomial ) {
     
     int size = polynomial.size;
@@ -109,6 +148,14 @@ static POLYNOMIAL sortTerms( POLYNOMIAL polynomial ) {
     return polynomial;
 }
 
+/**************************************************
+ ** polyString --
+ **     This funtions constructs a string that contains
+ ** the readable polynomial withe x and ^
+ **     Inputs: The polynomial and the Address to the 
+ ** string to be contructed 
+ **     Output: This changes the via the address
+ **************************************************/
 void polyString( POLYNOMIAL polynomial, char s[]) {
     
     int size = polynomial.size;

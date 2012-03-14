@@ -5,7 +5,8 @@
  ** Section: cs313-02 spring12
  ** E-mail: hall9@umbc.edu
  **
- **
+ **     This file contains the public prototpyes for polynomial.c
+ ** that can be used to mulnitulate a polynomial
  **
  ** Other Files requierd are
  ** 1. polynomail.c
